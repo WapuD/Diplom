@@ -19,6 +19,8 @@ namespace Web.Models
         Task UpdateUser(UserProfileDTO user);
 
         //Courses
+        [Get("/courses/MyCourses")]
+        Task<IEnumerable<Course>> GetCourses(int userId);
         [Get("/courses")]
         Task<IEnumerable<Course>> GetAllCourses();
         [Get("/courses/{id}")]
@@ -46,6 +48,11 @@ namespace Web.Models
         [Get("/images/byte/{id}")]
         Task<string> GetImageByte(int id);
 
+        //Favorites
+        [Get("/favorites/{userId}")]
+        Task<IEnumerable<Course>> GetFavorite(int userId);
+        [Post("/favorites")]
+        Task AddToFavorite(int userId, int courseId);
 
         /*[Post("/users")]
         Task<Users> CreateUser([Body] Users user);

@@ -1,59 +1,48 @@
-﻿@page
-@model API.Models.Course
+﻿@using API.Models
+@model Course
 
-<h1>Course</h1>
+@{
+    ViewData["Title"] = "Курс";
+}
 
-<div>
-    <h4>Course</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CourseName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CourseName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CourseDescription)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CourseDescription)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CourseDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CourseDate)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CourseText)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CourseText)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CourseTextRecom)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CourseTextRecom)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CourseTextWarning)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CourseTextWarning)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Category.CategoryName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Author)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Author.UserFirstName)
-        </dd>
-    </dl>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h2>@Model.CourseName</h2>
+            <p>@Model.CourseDescription</p>
+            <hr>
+            <div>
+                <h4>Курс</h4>
+                <textarea id="courseText" class="form-control" rows="1" style="height: auto;" readonly>@Model.CourseText</textarea>
+            </div>
+            <div>
+                <h4>Рекомендации</h4>
+                <textarea id="courseTextRecom" class="form-control" rows="1" style="height: auto;" readonly>@Model.CourseTextRecom</textarea>
+            </div>
+            <div>
+                <h4>Предупреждения</h4>
+                <textarea id="courseTextWarning" class="form-control" rows="1" style="height: auto;" readonly>@Model.CourseTextWarning</textarea>
+            </div>
+            <hr>
+            <div>
+                <h4>Дополнительные материалы</h4>
+                <p>@Model.CourseDate</p>
+            </div>
+            <hr>
+            <a asp-controller="Home" asp-action="AddToFavorite" asp-route-search="@Model.CourseId" asp-route-id="@Model.CourseId" class="btn btn-danger">Добавить в избранное</a>
+        </div>
+    </div>
 </div>
+
+<script>
+    window.onload = function () {
+        adjustTextareaHeight('courseText');
+        adjustTextareaHeight('courseTextRecom');
+        adjustTextareaHeight('courseTextWarning');
+    };
+    function adjustTextareaHeight(id) {
+        var textarea = document.getElementById(id);
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+    }
+</script>

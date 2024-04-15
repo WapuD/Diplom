@@ -79,7 +79,8 @@
                         <p><span>Описание:</span>@item.CourseAuthor</p>
                         <p><span>Категория:</span>@item.CourseAuthor</p>
                         <p><span>Дата создания:</span>@item.CourseAuthor</p>
-                        <a asp-action="Course" asp-route-search="@item.CourseId" asp-route-id="@item.CourseId" class="btn btn-danger">Читать</a> |
+                        <a asp-action="Course" asp-route-search="@item.CourseId" asp-route-id="@item.CourseId" class="btn btn-danger">Читать</a>
+                        <a asp-controller="Home" asp-action="AddToFavorite" asp-route-search="@item.CourseId" asp-route-id="@item.CourseId" class="btn btn-danger">Добавить в избранное</a>
                     </div>
                 </div>
             }

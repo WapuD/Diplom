@@ -45,12 +45,26 @@ namespace Web.Controllers
         public async Task<IActionResult> Course([FromQuery] int id)
         {
             var item = await I_Client.GetCourse(id);
-            return View("Test", item);
+            return View("Course", item);
         }
         public async Task<IActionResult> CourseDelete([FromQuery] int id)
         {
             var item = await I_Client.DeleteCourse(id);
             return View("Index");
+        }
+        public async Task<IActionResult> AddToFavorite([FromQuery] int courseId)
+        {
+            var userId = GetFromLocalStorage("user");
+            if (userId != null)
+            {
+                I_Client.AddToFavorite(Convert.ToInt32(userId), courseId);
+                return View("Profile");
+            }
+            else
+            {
+                I_Client.AddToFavorite(1, courseId);
+                return View("Profile");
+            }
         }
 
         public async Task<IActionResult> CourseAdd()
@@ -98,9 +112,13 @@ namespace Web.Controllers
         public async Task<IActionResult> Profile()
         {
             var userId = GetFromLocalStorage("user");
+
+
             if (userId != null)
             {
                 var item = await I_Client.GetUser(Convert.ToInt32(userId));
+                var myFavorites = await I_Client.GetFavorite(Convert.ToInt32(userId));
+                var myCourses = await I_Client.GetCourses(Convert.ToInt32(userId));
                 var image = await I_Client.GetImageByte(item.UserImage);
                 ViewData["image"] = image;
                 return View(item);
@@ -108,6 +126,8 @@ namespace Web.Controllers
             else
             {
                 var itemZero = await I_Client.GetUser(1);
+                ViewBag.MyFavorites = await I_Client.GetFavorite(1);
+                ViewBag.MyCourses = await I_Client.GetCourses(1);
                 var image = await I_Client.GetImageByte(itemZero.UserImage);
                 ViewData["image"] = image;
                 return View(itemZero);

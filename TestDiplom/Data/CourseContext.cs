@@ -14,6 +14,7 @@ namespace API.Data
         public DbSet<API.Models.Comment> Comment { get; set; } = default!;
         public DbSet<API.Models.Image> Image { get; set; } = default!;
         public DbSet<API.Models.Country> Country { get; set; } = default!;
+        public DbSet<API.Models.Favorite> Favorite { get; set; } = default!;
 
         public CourseContext()
         {

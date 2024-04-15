@@ -34,6 +34,20 @@ namespace API.Controllers
         {
             return await _context.Courses.ToListAsync();
         }
+        [HttpGet("MyCourses")]
+        public async Task<ActionResult<IEnumerable<Course>>> GetCourses(int userId)
+        {
+            var userCourses = await _context.Courses
+                .Where(c => c.CourseAuthor == userId)
+                .ToListAsync();
+
+            if (userCourses == null || userCourses.Count == 0)
+            {
+                return NotFound("Курсы пользователя не найдены.");
+            }
+
+            return userCourses;
+        }
 
         // GET: api/Courses/5
         [HttpGet("{id}")]

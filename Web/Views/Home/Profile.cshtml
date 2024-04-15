@@ -4,6 +4,8 @@
 @{
     ViewData["Title"] = "Профиль";
     var base64Image = ViewData["Image"];
+    var myFavorites = ViewBag.MyFavorites;
+    var myCourses = ViewBag.MyCourses;
 }
 
 <style>
@@ -219,6 +221,7 @@
     </div>
 
 
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
@@ -236,3 +239,45 @@
         }
     </script>
 </body>
+
+<div class="course-container">
+    @if (@myFavorites != null)
+    {
+        <H1>Избранные курсы</H1>
+        @foreach (var item in @myFavorites)
+        {
+            <div class="course-card" asp-controller="Home" asp-action="Course" asp-route-search="@item.CourseId" asp-route-id="@item.CourseId">
+                <img class="course-img" src="https://college.spbstu.ru/userfiles/images/news/DO(1).jpg" alt="Course 1 Image">
+                <div class="course-details">
+                    <h2>@item.CourseName</h2>
+                    <p><span>Автор:</span>@item.CourseAuthor</p>
+                    <p><span>Описание:</span>@item.CourseAuthor</p>
+                    <p><span>Категория:</span>@item.CourseAuthor</p>
+                    <p><span>Дата создания:</span>@item.CourseAuthor</p>
+                    <a asp-action="Course" asp-route-search="@item.CourseId" asp-route-id="@item.CourseId" class="btn btn-danger">Читать</a>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+<div class="course-container">
+    @if (@myCourses != null)
+    {
+        <H1>Созданные мной курсы</H1>
+        @foreach (var item in @myCourses)
+        {
+            <div class="course-card" asp-controller="Home" asp-action="Course" asp-route-search="@item.CourseId" asp-route-id="@item.CourseId">
+                <img class="course-img" src="https://college.spbstu.ru/userfiles/images/news/DO(1).jpg" alt="Course 1 Image">
+                <div class="course-details">
+                    <h2>@item.CourseName</h2>
+                    <p><span>Автор:</span>@item.CourseAuthor</p>
+                    <p><span>Описание:</span>@item.CourseAuthor</p>
+                    <p><span>Категория:</span>@item.CourseAuthor</p>
+                    <p><span>Дата создания:</span>@item.CourseAuthor</p>
+                    <a asp-action="Course" asp-route-search="@item.CourseId" asp-route-id="@item.CourseId" class="btn btn-danger">Читать</a>
+                </div>
+            </div>
+        }
+    }
+</div>
