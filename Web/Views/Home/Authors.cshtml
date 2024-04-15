@@ -1,0 +1,103 @@
+@using API.Models
+@model IEnumerable<User>
+
+@{
+    ViewData["Title"] = "Писатели";
+}
+
+<style>
+        body {
+            font-family: 'Tw Cen MT', sans-serif;
+            background-color: #FFFFFF;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .author-cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .author-card {
+            background-color: #B0E5FD;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+            width: 300px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .author-card:hover {
+            transform: scale(1.05);
+        }
+
+        .author-img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .author-details {
+            padding: 20px;
+            text-align: left;
+        }
+
+        h2 {
+            color: #FDBD40;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        span {
+            font-weight: bold;
+        }
+
+        .authors-heading {
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        img.author-img {
+            height: 280px;
+        }
+
+    </style>
+
+<body>
+
+    <div class="authors-heading">
+        <p>Наши Авторы</p>
+    </div>
+
+    <div class="author-cards-container">
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <div class="author-card" asp-action="OpenAuthorView" asp-route-search="@item.UserId" asp-route-id="@item.UserId">
+                    <img class="author-img" src="https://img2.freepng.ru/20180328/ehe/kisspng-laptop-computer-icons-user-system-administrator-pr-case-closed-5abbfc9dd444c3.7629748015222693418695.jpg" alt="Author 1 Image">
+                    <div class="author-details">
+                        <h2>@item.UserFirstName</h2>
+                        <p><span>Фамилия:</span>@item.UserSecondName</p>
+                        <p><span>Фото:</span>@item.UserImage</p>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</body>

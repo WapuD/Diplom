@@ -1,0 +1,95 @@
+@using API.Models
+@model User
+
+@{
+    ViewData["Title"] = "Авторизация";
+}
+
+<style>
+    body {
+        font-family: 'Tw Cen MT', sans-serif;
+        background-color: #FFFFFF;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    .container {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #B0E5FD;
+        padding: 40px;
+        border-radius: 10px;
+        width: 400px;
+        text-align: center;
+    }
+
+    h1 {
+        color: #FDBD40;
+        margin-bottom: 30px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 10px;
+        text-align: left;
+        color: #333;
+    }
+
+    input {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    button {
+        background-color: #FDBD40;
+        color: #FFFFFF;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #FFA523;
+    }
+
+    p {
+        margin-top: 20px;
+        color: #555;
+    }
+
+    a {
+        color: #FDBD40;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<body>
+    <h1>Авторизация</h1>
+    <form asp-controller="Home" asp-action="Login">
+        <label for="userLogin">Логин:</label>
+        <input type="text" id="userLogin" name="userLogin" required>
+
+        <label for="userPassword">Пароль:</label>
+        <input type="password" id="userPassword" name="userPassword" required>
+
+        <button type="submit">Войти</button>
+    </form>
+    
+    <p>Ещё не зарегистрированы? <a href="@Url.Action("Registration", "Home")">Зарегистрироваться</a></p>
+</body>

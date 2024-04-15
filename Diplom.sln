@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34407.89
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "TestDiplom\API.csproj", "{D50ACC2A-846B-421A-B533-46CB9B9A1F0B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WEB", "Web\WEB.csproj", "{1C20EB23-0441-4EE2-9F1F-CAD4DCDBADD6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D50ACC2A-846B-421A-B533-46CB9B9A1F0B} = {D50ACC2A-846B-421A-B533-46CB9B9A1F0B}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D50ACC2A-846B-421A-B533-46CB9B9A1F0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D50ACC2A-846B-421A-B533-46CB9B9A1F0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D50ACC2A-846B-421A-B533-46CB9B9A1F0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D50ACC2A-846B-421A-B533-46CB9B9A1F0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C20EB23-0441-4EE2-9F1F-CAD4DCDBADD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C20EB23-0441-4EE2-9F1F-CAD4DCDBADD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C20EB23-0441-4EE2-9F1F-CAD4DCDBADD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C20EB23-0441-4EE2-9F1F-CAD4DCDBADD6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3E418C86-18E1-4006-9010-02B57C38D3A6}
+	EndGlobalSection
+EndGlobal
