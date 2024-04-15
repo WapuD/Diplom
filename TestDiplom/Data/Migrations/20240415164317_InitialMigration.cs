@@ -11,6 +11,7 @@ namespace API.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            Down(migrationBuilder);
             migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
@@ -25,16 +26,29 @@ namespace API.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Image",
+                name: "Country",
                 columns: table => new
                 {
-                    userId = table.Column<int>(type: "integer", nullable: false)
+                    countryId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    userFirstName = table.Column<byte[]>(type: "bytea", nullable: false)
+                    countryName = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Image", x => x.userId);
+                    table.PrimaryKey("PK_Country", x => x.countryId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Image",
+                columns: table => new
+                {
+                    imageId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    imageData = table.Column<byte[]>(type: "bytea", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Image", x => x.imageId);
                 });
 
             migrationBuilder.CreateTable(
@@ -63,18 +77,24 @@ namespace API.Data.Migrations
                     userPassword = table.Column<string>(type: "text", nullable: false),
                     userGender = table.Column<bool>(type: "boolean", nullable: true),
                     userAge = table.Column<int>(type: "integer", nullable: true),
-                    userCountry = table.Column<int>(type: "integer", nullable: true),
                     userRole = table.Column<int>(type: "integer", nullable: false),
-                    userImage = table.Column<int>(type: "integer", nullable: false)
+                    userImage = table.Column<int>(type: "integer", nullable: false),
+                    userCountry = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.userId);
                     table.ForeignKey(
+                        name: "FK_Users_Country_userCountry",
+                        column: x => x.userCountry,
+                        principalTable: "Country",
+                        principalColumn: "countryId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Users_Image_userImage",
                         column: x => x.userImage,
                         principalTable: "Image",
-                        principalColumn: "userId",
+                        principalColumn: "imageId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Users_Roles_userRole",
@@ -91,8 +111,8 @@ namespace API.Data.Migrations
                     courseId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     courseName = table.Column<string>(type: "text", nullable: false),
-                    courseDesciption = table.Column<string>(type: "text", nullable: false),
-                    courseData = table.Column<string>(type: "text", nullable: false),
+                    courseDescription = table.Column<string>(type: "text", nullable: false),
+                    courseDate = table.Column<string>(type: "text", nullable: false),
                     courseText = table.Column<string>(type: "text", nullable: false),
                     courseTextRecom = table.Column<string>(type: "text", nullable: false),
                     courseTextWarning = table.Column<string>(type: "text", nullable: false),
@@ -152,6 +172,11 @@ namespace API.Data.Migrations
                 column: "courseCategory");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Users_userCountry",
+                table: "Users",
+                column: "userCountry");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_userImage",
                 table: "Users",
                 column: "userImage");
@@ -160,6 +185,7 @@ namespace API.Data.Migrations
                 name: "IX_Users_userRole",
                 table: "Users",
                 column: "userRole");
+            Insert(migrationBuilder);
         }
 
         /// <inheritdoc />
@@ -178,10 +204,51 @@ namespace API.Data.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
+                name: "Country");
+
+            migrationBuilder.DropTable(
                 name: "Image");
 
             migrationBuilder.DropTable(
                 name: "Roles");
+        }
+        /// <inheritdoc />
+        protected void Insert(MigrationBuilder migrationBuilder)
+        {
+            // Создаем категории
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "categoryId", "categoryName" },
+                values: new object[,]
+                {
+                    { 1, "Технологии" },
+                    { 2, "Наука" },
+                    { 3, "Искусство" },
+                    { 3, "Кулинария" }
+                });
+
+            // Создаем роли пользователей
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "roleId", "roleName" },
+                values: new object[,]
+                {
+                    { 1, "Читатель" },
+                    { 2, "Писатель" },
+                    { 2, "Администратор" }
+                });
+
+            // Создаем страны
+            migrationBuilder.InsertData(
+                table: "Country",
+                columns: new[] { "countryId", "countryName" },
+                values: new object[,]
+                {
+                    { 1, "Россия" },
+                    { 2, "США" },
+                    { 3, "Великобритания" },
+                    { 4, "Канада" }
+                });
         }
     }
 }

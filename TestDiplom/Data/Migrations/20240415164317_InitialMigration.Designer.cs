@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(CourseContext))]
-    [Migration("20240413015321_InitialMigration")]
+    [Migration("20240415164317_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -69,6 +69,25 @@ namespace API.Data.Migrations
                     b.ToTable("Comment");
                 });
 
+            modelBuilder.Entity("API.Models.Country", b =>
+                {
+                    b.Property<int>("CountryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("countryId");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CountryId"));
+
+                    b.Property<string>("CountryName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("countryName");
+
+                    b.HasKey("CountryId");
+
+                    b.ToTable("Country");
+                });
+
             modelBuilder.Entity("API.Models.Course", b =>
                 {
                     b.Property<int>("CourseId")
@@ -86,15 +105,15 @@ namespace API.Data.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("courseCategory");
 
-                    b.Property<string>("CourseData")
+                    b.Property<string>("CourseDate")
                         .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("courseData");
+                        .HasColumnName("courseDate");
 
-                    b.Property<string>("CourseDesciption")
+                    b.Property<string>("CourseDescription")
                         .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("courseDesciption");
+                        .HasColumnName("courseDescription");
 
                     b.Property<string>("CourseName")
                         .IsRequired()
@@ -130,14 +149,14 @@ namespace API.Data.Migrations
                     b.Property<int>("ImageId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasColumnName("userId");
+                        .HasColumnName("imageId");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ImageId"));
 
                     b.Property<byte[]>("ImageData")
                         .IsRequired()
                         .HasColumnType("bytea")
-                        .HasColumnName("userFirstName");
+                        .HasColumnName("imageData");
 
                     b.HasKey("ImageId");
 
@@ -176,7 +195,7 @@ namespace API.Data.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("userAge");
 
-                    b.Property<int?>("UserCountry")
+                    b.Property<int>("UserCountry")
                         .HasColumnType("integer")
                         .HasColumnName("userCountry");
 
@@ -218,6 +237,8 @@ namespace API.Data.Migrations
 
                     b.HasKey("UserId");
 
+                    b.HasIndex("UserCountry");
+
                     b.HasIndex("UserImage");
 
                     b.HasIndex("UserRole");
@@ -257,6 +278,12 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Models.User", b =>
                 {
+                    b.HasOne("API.Models.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("UserCountry")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("API.Models.Image", "Image")
                         .WithMany()
                         .HasForeignKey("UserImage")
@@ -268,6 +295,8 @@ namespace API.Data.Migrations
                         .HasForeignKey("UserRole")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Country");
 
                     b.Navigation("Image");
 

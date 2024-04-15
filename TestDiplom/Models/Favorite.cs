@@ -10,7 +10,9 @@ namespace API.Models
         [Column("favoriteId")]
         public int FavoriteId { get; set; }
         [Column("favoriteUser")]
-        public string FavoriteUser { get; set; }
+        [ForeignKey("User")]
+        public int FavoriteUser { get; set; }
+        public User User { get; set; }
         [Column("favoriteCourse")]
         [ForeignKey("Course")]
         public int FavoriteCourse { get; set; }

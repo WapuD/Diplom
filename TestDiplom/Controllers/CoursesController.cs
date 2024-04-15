@@ -101,10 +101,10 @@ namespace API.Controllers
 
             item.CourseName = course.CourseName;
             item.CourseText = course.CourseText;
-            item.CourseDesciption = course.CourseDesciption;
+            item.CourseDescription = course.CourseDescription;
             item.CourseTextRecom = course.CourseTextRecom;
             item.CourseTextWarning = course.CourseTextWarning;
-            item.CourseData = DateTime.Today.ToString();
+            item.CourseDate = DateTime.Today.ToString();
 
 
             _context.Courses.Add(item);
@@ -146,7 +146,7 @@ namespace API.Controllers
             var coursesThisYear = _context.Courses.ToList();
             for (int i = 0; i < coursesThisYear.Count; i++)
             {
-                var str = coursesThisYear[i].CourseData;
+                var str = coursesThisYear[i].CourseDate;
                 var year = str.Substring(str.Length - 4);
                 if (Convert.ToInt32(year) == DateTime.Now.Year)
                     countThisYear += 1;
@@ -203,10 +203,10 @@ namespace API.Controllers
             foreach (var course in courses)
             {
                 AddCell(table, course.CourseName, dataFont);
-                AddCell(table, course.CourseDesciption, dataFont);
+                AddCell(table, course.CourseDescription, dataFont);
                 AddCell(table, course.Category.CategoryName, dataFont); // Если есть свойство CategoryName в модели Category
                 AddCell(table, (course.Author.UserFirstName + " " + course.Author.UserSecondName), dataFont); // Если есть свойство UserName в модели User
-                AddCell(table, course.CourseData, dataFont); // Добавьте данные о дате, если это нужно
+                AddCell(table, course.CourseDate, dataFont); // Добавьте данные о дате, если это нужно
             }
 
             document.Add(table);

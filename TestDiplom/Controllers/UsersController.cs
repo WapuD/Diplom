@@ -87,7 +87,7 @@ namespace API.Controllers
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(UserDTO user)
+        public async Task<ActionResult<UserDTO>> PostUser(UserDTO user)
         {
             var lastUser = _context.Users.OrderBy(u => u.UserId).LastOrDefault();
 
@@ -102,6 +102,8 @@ namespace API.Controllers
             item.UserPassword = user.UserPassword;
             item.UserImage = 1;
             item.UserRole = 1;
+            item.UserCountry = 0;
+
             _context.Users.Add(item);
             await _context.SaveChangesAsync();
 

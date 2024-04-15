@@ -11,10 +11,10 @@ namespace API.Models
         public int CourseId { get; set; }
         [Column("courseName")]
         public string CourseName { get; set; }
-        [Column("courseDesciption")]
-        public string CourseDesciption { get; set; }
-        [Column("courseData")]
-        public string CourseData { get; set; }
+        [Column("courseDescription")]
+        public string CourseDescription { get; set; }
+        [Column("courseDate")]
+        public string CourseDate { get; set; }
         [Column("courseText")]
         public string CourseText { get; set; }
         [Column("courseTextRecom")]

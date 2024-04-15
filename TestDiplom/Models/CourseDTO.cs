@@ -6,7 +6,7 @@ namespace API.Models
     public class CourseDTO
     {
         public string CourseName { get; set; }
-        public string CourseDesciption { get; set; }
+        public string CourseDescription { get; set; }
         public string CourseText { get; set; }
         public string CourseTextRecom { get; set; }
         public string CourseTextWarning { get; set; }
