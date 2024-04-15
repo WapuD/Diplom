@@ -129,6 +129,7 @@ ViewData["Title"] = "Регистрация";
     <div id="popup" class="popup">
         <div class="popup-content">
             <span class="close" onclick="closePopup()">&times;</span>
+            <p>Длина всех полей должна быть от 6 до 20 символов включительно</p>
             <p>Имя и Фамилия: Разрешено использовать только кириллицу</p>
             <p>Логин: Разрешено использовать только латиницу</p>
             <p>Пароль: Разрешено использовать только латиницу и цифры</p>
@@ -137,16 +138,16 @@ ViewData["Title"] = "Регистрация";
 
     <form method="post" asp-controller="Home" asp-action="CreateUser" enctype="multipart/form-data">
         <label for="userFirstName">Имя:</label>
-        <input minlength="6" maxlength="20" type="text" id="userFirstName" name="userFirstName" required data-val="true" data-val-regex="Only Latin characters are allowed." data-val-regex-pattern="^[a-zA-Zа-яА-Я]*">
+        <input minlength="6" maxlength="20" type="text" id="userFirstName" name="userFirstName" required data-val="true" data-val-regex="." data-val-regex-pattern="^[a-zA-Zа-яА-Я]*">
 
         <label for="userSecondName">Фамилия:</label>
-        <input minlength="6" maxlength="20" type="text" id="userSecondName" name="userSecondName" required data-val="true" data-val-regex="Only Latin characters are allowed." data-val-regex-pattern="^[a-zA-Zа-яА-Я]*">
+        <input minlength="6" maxlength="20" type="text" id="userSecondName" name="userSecondName" required data-val="true" data-val-regex="." data-val-regex-pattern="^[a-zA-Zа-яА-Я]*">
 
         <label for="userLogin">Логин:</label>
-        <input minlength="6" maxlength="20" type="text" id="userLogin" name="userLogin" required data-val="true" data-val-regex="Only Latin characters are allowed." data-val-regex-pattern="^[a-zA-Zа-яА-Я]*">
+        <input minlength="6" maxlength="20" type="text" id="userLogin" name="userLogin" required data-val="true" data-val-regex="." data-val-regex-pattern="^[a-zA-Z]*">
 
         <label for="userPassword">Пароль:</label>
-        <input minlength="6" maxlength="20" type="password" id="userPassword" name="userPassword" required data-val="true" data-val-regex="Only Latin characters and digits are allowed." data-val-regex-pattern="^[a-zA-Z0-9]*">
+        <input minlength="6" maxlength="20" type="password" id="userPassword" name="userPassword" required data-val="true" data-val-regex="." data-val-regex-pattern="^[a-zA-Z0-9]*">
 
         <button type="submit">Зарегистрироваться</button>
     </form>

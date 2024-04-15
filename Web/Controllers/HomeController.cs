@@ -129,5 +129,31 @@ namespace Web.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateProfile([FromForm] UserProfileDTO user)
+        {
+            var userId = GetFromLocalStorage("user");
+            if (userId != null)
+            {
+                var userData = await I_Client.GetUser(Convert.ToInt32(userId));
+                user.UserId = Convert.ToInt32(userId);
+                user.UserCountry = userData.UserCountry;
+                user.UserImage = userData.UserImage;
+                user.UserRole = userData.UserRole;
+                await I_Client.UpdateUser(user);
+                return RedirectToAction("Profile");
+            }
+            else
+            {
+                var userData = await I_Client.GetUser(1);
+                user.UserId = 1;
+                user.UserCountry = userData.UserCountry;
+                user.UserImage = userData.UserImage;
+                user.UserRole = userData.UserRole;
+                await I_Client.UpdateUser(user);
+                return RedirectToAction("Profile");
+            }
+        }
     }
 }

@@ -11,6 +11,7 @@ using Refit;
 using System.Linq;
 using iTextSharp.text.pdf;
 using iTextSharp.text;
+using static iTextSharp.text.pdf.AcroFields;
 
 namespace API.Controllers
 {
@@ -55,32 +56,30 @@ namespace API.Controllers
 
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        [HttpPut]
+        public async Task<ActionResult> PutUser(UserProfileDTO user)
         {
-            if (id != user.UserId)
-            {
-                return BadRequest();
-            }
+            var item = new User();
+            item.UserId = user.UserId;
+            item.UserFirstName = user.UserFirstName;
+            item.UserSecondName = user.UserSecondName;
+            item.UserThirdName = user.UserThirdName;
+            item.UserLogin = user.UserLogin;
+            item.UserPassword = user.UserPassword;
+            item.UserImage = user.UserImage;
+            item.UserRole = user.UserRole;
+            item.UserCountry = user.UserCountry;
+            item.UserAge = user.UserAge;
+            item.UserGender = user.UserGender;
+            var role = await _context.Roles.FindAsync(item.UserRole);
+            item.Role = role;
+            var image = await _context.Image.FindAsync(item.UserImage);
+            item.Image = image;
+            var country = await _context.Country.FindAsync(item.UserCountry);
+            item.Country = country;
 
-            _context.Entry(user).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            _context.Entry(item).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
             return NoContent();
         }
 

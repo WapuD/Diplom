@@ -15,6 +15,8 @@ namespace Web.Models
         Task<IEnumerable<User>> GetUserAuthors();
         [Post("/users")]
         Task<UserDTO> CreateUser(UserDTO user);
+        [Put("/users")]
+        Task UpdateUser(UserProfileDTO user);
 
         //Courses
         [Get("/courses")]
