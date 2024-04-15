@@ -42,8 +42,13 @@ namespace API.Controllers
         public async Task<FileContentResult> GetImage(int id)
         {
             var image = _context.Image.Find(id);
-
-            return File(image.ImageData, "image/jpeg");
+            if (image == null)
+            {
+                var imageDefault = _context.Image.Find(1);
+                return File(imageDefault.ImageData, "image/jpeg");
+            }
+            else
+                return File(image.ImageData, "image/jpeg");
         }
 
         // GET: api/Images/5

@@ -82,14 +82,21 @@
 <body>
     <h1>Авторизация</h1>
     <form asp-controller="Home" asp-action="Login">
+
         <label for="userLogin">Логин:</label>
-        <input type="text" id="userLogin" name="userLogin" required>
+        <input minlength="6" maxlength="20" type="text" id="userLogin" name="userLogin" required data-val="true" data-val-regex="Only Latin characters are allowed." data-val-regex-pattern="^[a-zA-Zа-яА-Я]*">
 
         <label for="userPassword">Пароль:</label>
-        <input type="password" id="userPassword" name="userPassword" required>
+        <input minlength="6" maxlength="20" type="password" id="userPassword" name="userPassword" required data-val="true" data-val-regex="Only Latin characters and digits are allowed." data-val-regex-pattern="^[a-zA-Z0-9]*">
+
 
         <button type="submit">Войти</button>
     </form>
     
     <p>Ещё не зарегистрированы? <a href="@Url.Action("Registration", "Home")">Зарегистрироваться</a></p>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
 </body>

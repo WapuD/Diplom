@@ -211,6 +211,7 @@ namespace API.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Roles");
+            Insert(migrationBuilder);
         }
         /// <inheritdoc />
         protected void Insert(MigrationBuilder migrationBuilder)

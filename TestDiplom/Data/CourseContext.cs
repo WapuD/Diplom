@@ -11,6 +11,9 @@ namespace API.Data
         public DbSet<API.Models.Role> Roles { get; set; } = default!;
         public DbSet<API.Models.User> Users { get; set; } = default!;
         public DbSet<API.Models.Course> Courses { get; set; } = default!;
+        public DbSet<API.Models.Comment> Comment { get; set; } = default!;
+        public DbSet<API.Models.Image> Image { get; set; } = default!;
+        public DbSet<API.Models.Country> Country { get; set; } = default!;
 
         public CourseContext()
         {
@@ -20,7 +23,5 @@ namespace API.Data
         {
             optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=Kyrs;Username=postgres;Password=1234");
         }
-        public DbSet<API.Models.Comment> Comment { get; set; } = default!;
-        public DbSet<API.Models.Image> Image { get; set; } = default!;
     }
 }

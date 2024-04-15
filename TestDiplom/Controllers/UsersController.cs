@@ -89,25 +89,37 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<UserDTO>> PostUser(UserDTO user)
         {
-            var lastUser = _context.Users.OrderBy(u => u.UserId).LastOrDefault();
+            if (!UserExistsLogin(user.UserLogin))
+            {
+                var lastUser = _context.Users.OrderBy(u => u.UserId).LastOrDefault();
+                var item = new User();
+                if (lastUser != null)
+                    item.UserId = lastUser.UserId + 1;
+                else
+                    item.UserId = 1;
 
-            var item = new User();
-            if (lastUser != null)
-                item.UserId = lastUser.UserId + 1;
+                item.UserFirstName = user.UserFirstName;
+                item.UserSecondName = user.UserSecondName;
+                item.UserLogin = user.UserLogin;
+                item.UserPassword = user.UserPassword;
+                item.UserImage = 1;
+                item.UserRole = 1;
+                item.UserCountry = 1;
+
+                var role = await _context.Roles.FindAsync(item.UserRole);
+                item.Role = role;
+                var image = await _context.Image.FindAsync(item.UserImage);
+                item.Image = image;
+                var country = await _context.Country.FindAsync(item.UserCountry);
+                item.Country = country;
+
+                _context.Users.Add(item);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction("GetUser", new { id = item.UserId }, user);
+            }
             else
-                item.UserId = 1;
-            item.UserFirstName = user.UserFirstName;
-            item.UserSecondName = user.UserSecondName;
-            item.UserLogin = user.UserLogin;
-            item.UserPassword = user.UserPassword;
-            item.UserImage = 1;
-            item.UserRole = 1;
-            item.UserCountry = 0;
-
-            _context.Users.Add(item);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUser", new { id = item.UserId }, user);
+                return Conflict("Пользователь с таким логином уже существует");
         }
 
         // DELETE: api/Users/5
@@ -129,6 +141,10 @@ namespace API.Controllers
         private bool UserExists(int id)
         {
             return _context.Users.Any(e => e.UserId == id);
+        }
+        private bool UserExistsLogin(string login)
+        {
+            return _context.Users.Any(e => e.UserLogin == login);
         }
 
 
