@@ -92,11 +92,28 @@ namespace Web.Controllers
         {
             return View();
         }
+        public async Task<IActionResult> AdminIndex()
+        {
+            var item = await I_Client.GetAllCourses();
+            return View(item);
+        }
+        [HttpDelete]
+        public async Task<IActionResult> DeleteCourse([FromQuery] int courseId)
+        {
+            await I_Client.DeleteCourse(courseId);
+            return RedirectToAction("AdminIndex", "Home");
+        }
 
         public async Task<IActionResult> Login([FromForm] string userLogin, string userPassword)
         {
             var users = await I_Client.GetAllUsers();
             var user = users.FirstOrDefault(u => u.UserLogin == userLogin && u.UserPassword == userPassword);
+
+            if (user.UserRole == 3)
+            {
+                var item = await I_Client.GetAllCourses();
+                return RedirectToAction("AdminIndex", "Home");
+            }
 
             if (user != null)
             {
@@ -116,12 +133,23 @@ namespace Web.Controllers
 
             if (userId != null)
             {
-                var item = await I_Client.GetUser(Convert.ToInt32(userId));
-                var myFavorites = await I_Client.GetFavorite(Convert.ToInt32(userId));
-                var myCourses = await I_Client.GetCourses(Convert.ToInt32(userId));
-                var image = await I_Client.GetImageByte(item.UserImage);
-                ViewData["image"] = image;
-                return View(item);
+                try
+                {
+                    var myFavorites = await I_Client.GetFavorite(Convert.ToInt32(userId));
+                    var item = await I_Client.GetUser(Convert.ToInt32(userId));
+                    var myCourses = await I_Client.GetCourses(Convert.ToInt32(userId));
+                    var image = await I_Client.GetImageByte(item.UserImage);
+                    ViewData["image"] = image;
+                    return View(item);
+                }
+                catch
+                {
+                    var item = await I_Client.GetUser(Convert.ToInt32(userId));
+                    var myCourses = await I_Client.GetCourses(Convert.ToInt32(userId));
+                    var image = await I_Client.GetImageByte(item.UserImage);
+                    ViewData["image"] = image;
+                    return View(item);
+                }
             }
             else
             {

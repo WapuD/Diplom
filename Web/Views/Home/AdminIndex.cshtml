@@ -71,7 +71,7 @@
         {
             @foreach (var item in Model)
             {
-                <div class="course-card" asp-controller="Home" asp-action="CourseDelete" asp-route-search="@item.CourseId" asp-route-id="@item.CourseId">
+                <div class="course-card">
                     <img class="course-img" src="https://college.spbstu.ru/userfiles/images/news/DO(1).jpg" alt="Course 1 Image">
                     <div class="course-details">
                         <h2>@item.CourseName</h2>
@@ -79,7 +79,7 @@
                         <p><span>Описание:</span>@item.CourseAuthor</p>
                         <p><span>Категория:</span>@item.CourseAuthor</p>
                         <p><span>Дата создания:</span>@item.CourseAuthor</p>
-                        <a asp-action="CourseDelete" asp-route-search="@item.CourseId" asp-route-id="@item.CourseId" class="btn btn-danger">Удалить</a>
+                        <a asp-controller="Home" asp-action="DeleteCourse" asp-route-search="@item.CourseId" asp-route-id="@item.CourseId" class="btn btn-danger">Удалить</a>
                     </div>
                 </div>
             }

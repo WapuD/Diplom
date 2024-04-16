@@ -128,10 +128,10 @@ namespace API.Controllers
         }
 
         // DELETE: api/Courses/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCourse(int id)
+        [HttpDelete("{courseId}")]
+        public async Task<IActionResult> DeleteCourse(int courseId)
         {
-            var course = await _context.Courses.FindAsync(id);
+            var course = await _context.Courses.FindAsync(courseId);
             if (course == null)
             {
                 return NotFound();

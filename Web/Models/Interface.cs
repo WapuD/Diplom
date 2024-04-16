@@ -25,8 +25,8 @@ namespace Web.Models
         Task<IEnumerable<Course>> GetAllCourses();
         [Get("/courses/{id}")]
         Task<Course> GetCourse(int id);
-        [Get("/courses/{id}")]
-        Task<Course> DeleteCourse(int id);
+        [Get("/courses/{courseId}")]
+        Task<Course> DeleteCourse(int courseId);
         [Get("/courses")]
         Task CreateCourse(CourseDTO course);
 

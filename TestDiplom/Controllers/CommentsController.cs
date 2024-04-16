@@ -20,7 +20,7 @@ namespace API.Controllers
         {
             _context = context;
         }
-
+        
         // GET: api/Comments
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Comment>>> GetComment()

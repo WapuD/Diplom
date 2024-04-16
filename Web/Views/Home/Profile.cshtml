@@ -251,10 +251,10 @@
     </script>
 </body>
 
+<H1>Избранные курсы</H1>
 <div class="course-container">
     @if (@myFavorites != null)
     {
-        <H1>Избранные курсы</H1>
         @foreach (var item in @myFavorites)
         {
             <div class="course-card" asp-controller="Home" asp-action="Course" asp-route-search="@item.CourseId" asp-route-id="@item.CourseId">
@@ -272,10 +272,10 @@
     }
 </div>
 
+<H1>Созданные мной курсы</H1>
 <div class="course-container">
     @if (@myCourses != null)
     {
-        <H1>Созданные мной курсы</H1>
         @foreach (var item in @myCourses)
         {
             <div class="course-card" asp-controller="Home" asp-action="Course" asp-route-search="@item.CourseId" asp-route-id="@item.CourseId">
