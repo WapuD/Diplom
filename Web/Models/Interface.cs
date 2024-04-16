@@ -28,7 +28,7 @@ namespace Web.Models
         [Get("/courses/{id}")]
         Task<Course> DeleteCourse(int id);
         [Get("/courses")]
-        Task<Course> CreateCourse(CourseDTO course);
+        Task CreateCourse(CourseDTO course);
 
         //Categories
         [Get("/categories")]

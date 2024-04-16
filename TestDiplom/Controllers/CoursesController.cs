@@ -97,7 +97,7 @@ namespace API.Controllers
         // POST: api/Courses
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Course>> PostCourse(CourseDTO course)
+        public async Task<ActionResult> CreateCourse(CourseDTO course)
         {
             var lastCourse = _context.Courses.OrderBy(u => u.CourseId).LastOrDefault();
             var item = new Course();
@@ -118,7 +118,7 @@ namespace API.Controllers
             item.CourseDescription = course.CourseDescription;
             item.CourseTextRecom = course.CourseTextRecom;
             item.CourseTextWarning = course.CourseTextWarning;
-            item.CourseDate = DateTime.Today.ToString();
+            item.CourseDate = DateTime.Today.ToString("yyyy-MM-dd");
 
 
             _context.Courses.Add(item);
